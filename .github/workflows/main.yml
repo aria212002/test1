@@ -1,0 +1,20 @@
+name: Build EXE File
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Install PyInstaller
+      run: pip install pyinstaller
+    - name: Build with PyInstaller
+      run: pyinstaller --onefile --name="mbc_tester" mbc_tester.pyw
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mbc_tester
+        path: dist/mbc_tester.exe
